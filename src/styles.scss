@@ -1,0 +1,23 @@
+/* You can add global styles to this file, and also import other style files */
+
+/* Importing Bootstrap SCSS file. */
+
+body, html{
+    width: 100%;
+    height: 100%;
+    touch-action: manipulation; /* This helps prevent the pinch-to-zoom */
+    -ms-touch-action: manipulation;
+    -webkit-user-select: none;  /* Prevents text selection */
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+
+
+app-root{
+    order: 0;
+    flex: 1 1 auto;
+    align-self: stretch;
+    display: block;
+}
