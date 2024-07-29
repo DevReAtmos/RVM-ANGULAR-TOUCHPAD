@@ -16,9 +16,6 @@ export class MachineComponent implements OnInit{
   country: string = "";
   phone: string = "";
 
-  
-
-  
 
   constructor(
     private toastr: ToastrService,

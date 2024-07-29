@@ -30,6 +30,7 @@ import { BottleErrorComponent } from './components/bottle-error/bottle-error.com
 import { MachineDataComponent } from './components/admin/machine-data/machine-data.component';
 import { MachineComponent } from './components/admin/machine/machine.component';
 import { HttpClientModule } from '@angular/common/http';
+import { DonateComponent } from './components/donate/donate.component';
 
 @NgModule({
   declarations: [
@@ -53,7 +54,8 @@ import { HttpClientModule } from '@angular/common/http';
     MetalComponent,
     BottleErrorComponent,
     MachineDataComponent,
-    MachineComponent
+    MachineComponent,
+    DonateComponent
   ],
   imports: [
     BrowserModule,
