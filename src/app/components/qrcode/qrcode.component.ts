@@ -39,7 +39,10 @@ export class QrcodeComponent implements OnInit{
   dataString:string = '';
   currentDate = new Date();
   date =this.currentDate.toISOString();
-  Res =2;
+  count:any;
+  localdata:any;
+  machineinfo:any;
+
 
   constructor(
     private toastr: ToastrService,
@@ -74,6 +77,22 @@ export class QrcodeComponent implements OnInit{
     //   // this.data.weight = params['totalWeightBottle'] +  params['totalWeightCans'] ;
     //   // totalPolybagCount: this.totalPolybagCount, totalWeightBottle :this.totalWeightBottle,totalWeightCans :this.totalWeightCans
     // });
+    this.getData();
+    this.localdata =this.machineDataService.getSavedData();
+    this.machineinfo = this.machineDataService.getMachineInfoStoreLocally();
+    this.count = this.localdata.bottles + this.localdata.cans
+    this.data = {
+      // dataID: '',
+      mcid: this.machineinfo.mcid,
+      bottles: 0,
+      cans: 0,
+      Date: "",
+      weight: this.localdata.totalWeightBottle + this.localdata.totalWeightCans,
+      Phone_no: this.localdata.phone,
+      // transaction_id: "", 
+    
+    };
+
     this.dataString = JSON.stringify(this.data);
     console.log("data are ",this.dataString);
 
@@ -102,10 +121,10 @@ export class QrcodeComponent implements OnInit{
   myObject(){
     return{
     Date: this.date,
-    Recycled_items: this.Res,
-    Location:"Ahmedabad",
-    Coin_Earned:"7000",
-    Phone_no:"8511195381",
+    Recycled_items: this.count ,
+    Location: this.machineinfo.city,
+    Coin_Earned: this.count,
+    Phone_no: this.localdata.phoneNumber,
     transaction_id: "",
     // valid:true
     };
@@ -115,8 +134,7 @@ export class QrcodeComponent implements OnInit{
     let data = this.machineDataService.getSavedData();
     console.log("User data",data);
     this.machineDataService.updateMachineData(data);
-   
-    
+
     // this.dataString = data; 
   }
 
@@ -126,19 +144,9 @@ export class QrcodeComponent implements OnInit{
 
   //  when User pres next button this data will stored on database
   next(){
-    let data = {
-      // id: this.data.dataID,
-      mcid: this.data.machineID,
-      bottles: this.data.bottles,
-      cans: this.data.cans,
-      phone : '8511195381',
-      date : this.date,
-      // polybags: this.data.plastic,
-      weight: 0,
-
-    }
+    
 //  Here data is posting in backend
-    this.dataService.postUserData(data).subscribe(
+    this.dataService.postUserData(this.data).subscribe(
       (data:any) => {
         console.log(data);
       }

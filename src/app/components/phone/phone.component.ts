@@ -37,7 +37,8 @@ export class PhoneComponent implements OnInit{
   //  If user has pressed enter then this Data should go Admin panel
   cancelPressed(){
     let data = this.machineDataService.getSavedData();
-    this.machineDataService.updateMachineData(data)
+    this.machineDataService.updateMachineData(data);
+    sessionStorage.clear();
     this.router.navigate(['/home']);
   }
 

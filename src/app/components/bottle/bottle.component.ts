@@ -270,6 +270,7 @@ export class BottleComponent implements OnInit{
     this.disableButton = true;
     this.saveData();
     this.savedData();
+    sessionStorage.clear();
     this.router.navigate(['/home']);
   }
 

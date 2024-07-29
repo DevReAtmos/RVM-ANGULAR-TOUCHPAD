@@ -44,11 +44,11 @@ export class MachineDataComponent implements OnInit{
     let data = this.machineDataServie.getSavedData();
     console.log("debugging statement of saved data",data);
     this.machineDataServie.getMachineData().subscribe((res:any) => {
-      this.totalBottles = res.bottles + data.totalBottles;
-      this.totalCans = res.cans +  data.totalCans;
+      this.totalBottles = res.bottles;
+      this.totalCans = res.cans;
       this.totalPolybags = res.polybags;
-      this.totalWeightBottle = res.totalWeightBottle + data.totalWeightBottle ;
-      this.totalWeightCans = res.totalWeightCans + data.totalWeightCans;
+      this.totalWeightBottle = res.totalWeightBottle ;
+      this.totalWeightCans = res.totalWeightCans;
 
     },
     (err:any) => {
