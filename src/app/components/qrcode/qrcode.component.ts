@@ -19,21 +19,7 @@ export class QrcodeComponent implements OnInit{
   Location ='';
   city ="";
 
-  data: any = {
-    // dataID: '',
-    machineID: '',
-
-    bottles: 0,
-    cans: 0,
-    Date: "",
-    Recycled_items: 2,
-    Location:"Ahmedabad",
-    Coin_Earned:"7000",
-    Phone_no:"8511195381",
-    transaction_id: "" ,
-    
-  
-  };
+  data: {};
 
   
   dataString:string = '';
