@@ -12,6 +12,8 @@ export class DataService {
     private http: HttpClient
   ) { }
 
+  
+
   postUserData(data:any){
     return this.http.post(this.apiUrl + '/post-user-data', data);
   }

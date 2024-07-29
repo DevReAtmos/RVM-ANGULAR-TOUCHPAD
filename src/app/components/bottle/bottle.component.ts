@@ -38,6 +38,7 @@ export class BottleComponent implements OnInit{
   counterSubsription: Subscription;
   dataSubscription: Subscription;
   SavedData:any;
+  machineInfo:any;
   constructor(
     private router: Router,
     private toastr: ToastrService,
@@ -64,7 +65,6 @@ export class BottleComponent implements OnInit{
       (data:any) => {
         this.machineID = data.mcid;
         this.timeStamp = this.dateTimeObj.toLocaleString();
-
         this.timeStamp = this.timeStamp.replace(' ', '');
         this.timeStamp = this.timeStamp.replace('/', '');
         this.timeStamp = this.timeStamp.replace('/', '');
@@ -74,11 +74,17 @@ export class BottleComponent implements OnInit{
         this.timeStamp = this.timeStamp.replace(' ', '');
 
         this.dataID = this.machineID + this.timeStamp;
+        this.machineInfo ={
+          mcid : this.machineData,
+          city : data.city
+        }
+        this.machineData.setMachineInfoStoreLocally(this.machineInfo);
         console.log(this.dataID);
       },(err) => {
         toastr.error("Something went wrong please try again later");
         router.navigate(['/home']);
       });
+
 
       
     this.activatedRoute.data.subscribe(
@@ -272,9 +278,9 @@ export class BottleComponent implements OnInit{
   next(){
     this.disableButton = true;
     this.saveData();
-    this.savedData();
+    // this.savedData();
     // this.router.navigate(['/qr-code'], {queryParams: {totalBottleCount: this.totalBottleCount, totalCanCount: this.totalCanCount, totalPolybagCount: this.totalPolybagCount, totalWeightBottle :this.totalWeightBottle,totalWeightCans :this.totalWeightCans , dataID: this.dataID, machineID: this.machineID, timeStamp: this.timeStamp}});
-    this.router.navigateByUrl('/phone');
+    this.router.navigateByUrl('/donate');
     //  In this function Add option selection components 
     //  Alternative Approach , As we are moving from optins page , can we save this parameter in local storage 
     // and if user opt for donate then we collect data from local storage and send it to the server and 
@@ -294,8 +300,11 @@ export class BottleComponent implements OnInit{
       phoneNumber :''
     }
      this.machineData.setSaveDataOnLocalStorage(this.savedData);
+     this.machineData.updateMachineData(this.SavedData)
+
     // sessionStorage.setItem('data', this.SavedData);
   }
+
   
   //  future work
   SaveLocalStorageOFmachine(){

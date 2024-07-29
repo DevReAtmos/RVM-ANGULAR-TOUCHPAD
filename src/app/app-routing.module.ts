@@ -19,6 +19,7 @@ import { FilledwinComponent } from './components/filledwin/filledwin.component';
 import { BottleErrorComponent } from './components/bottle-error/bottle-error.component';
 import { MachineComponent } from './components/admin/machine/machine.component';
 import { MachineDataComponent } from './components/admin/machine-data/machine-data.component';
+import { DonateComponent } from './components/donate/donate.component';
 
 
 const routes: Routes = [
@@ -57,6 +58,10 @@ const routes: Routes = [
   {
     path: 'bottle-error',
     component: BottleErrorComponent
+  },
+  {
+    path: 'donate',
+    component: DonateComponent
   },
   {
     path: 'admin',

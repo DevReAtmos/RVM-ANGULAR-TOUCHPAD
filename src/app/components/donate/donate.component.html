@@ -1,1 +1,28 @@
-<p>donate works!</p>
+
+<div class="container my-2">
+    <h3>{{counter}}</h3>
+</div>
+<div class="outer-container"> <!-- Add this div to act as a parent container -->
+    <div class="box">
+        <div class="row">
+            <div class="col">
+                <p class="text-center">Click here to donate and support.</p>
+                <div class="col">
+                    <img src="../../../assets/images/Donate.jpeg" alt="Donate Logo" class="donate-logo" (click)="handleImageTap('donate')" (touchend)="handleImageTap('donate')">
+                </div>
+            </div>
+            <div class="col">
+                <div class="line">
+                    <div class="vertical-line"></div>
+                </div>
+                
+            </div>
+            <div class="col">
+                <p class="text-center">Click here for generate qr-code.</p>
+                <div class="col">
+                    <img src="../../../assets/images/qr-code.png" alt="QR Logo" class="qr-logo" (click)="handleImageTap('phone')" (touchend)="handleImageTap('phone')">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -28,12 +28,25 @@ export class MachineDataService {
     return this.http.post(this.apiUrl + '/update-machine-info', data);
   }
 
+  updateMachineData(data:any){
+    return this.http.post(this.apiUrl + '/update-machine-data', data);
+  }
+
   setSaveDataOnLocalStorage(savedData:any){
     sessionStorage.setItem('data', savedData);
   }
 
   getSavedData(){
     let data = sessionStorage.getItem('data');
+    return data ? JSON.parse(data) : null;
+  }
+
+  setMachineInfoStoreLocally(data:any){
+    sessionStorage.setItem('machine' ,data)
+  }
+
+  getMachineInfoStoreLocally(){
+    let data = sessionStorage.getItem('machine');
     return data ? JSON.parse(data) : null;
   }
 }

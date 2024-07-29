@@ -5,6 +5,11 @@
 /tmp
 /out-tsc
 /bazel-out
+/dist.rar
+/dist.zip
+/dist1.zip
+/dist3.zip
+/prj.zip
 
 # Node
 /node_modules

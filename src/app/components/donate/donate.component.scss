@@ -1,0 +1,153 @@
+// .container {
+//     display: flex;
+//     align-items: center;
+//     justify-content: space-between;
+//     width: 650px;
+//     margin: 150px auto 0 auto;
+//     background-color: #C3C3C3;
+//     border-radius: 25px;
+//     padding: 25px;
+// }
+
+// .donatebox-container, .qr-code-container {
+    
+//     display: flex;
+//     flex-direction: column;
+//     align-items: center;
+//     justify-content: center;
+//     width: 50%;
+// }
+
+// .donate-logo {
+//     width: 150px; /* Set a fixed width for both the logo and the QR code */
+//     height: 150px; /* Set a fixed height for both the logo and the QR code */
+//     object-fit: contain; /* Ensures the image scales properly within the set dimensions */
+// }
+
+// .row {
+//     min-height: 120px; // Adjust this value as needed
+// }
+
+
+// .qr-logo {
+//     width: 150px; /* Set a fixed width for both the logo and the QR code */
+//     height: 150px; /* Set a fixed height for both the logo and the QR code */
+//     object-fit: contain; /* Ensures the image scales properly within the set dimensions */
+// }
+
+// .vertical-line {
+//     position: absolute;
+//     // top: 10%;
+//     // left: 50%;
+//     left: 100px;
+//     height: 30%;
+//     width: 1px;
+//     background-color: #000; // Change color as needed
+//     // transform: translateX(-50%);
+// }
+
+p {
+    // text-align: center;
+    font-size: 18px;
+    font: bold;
+}
+
+// h2 {
+//     height: fit-content;
+//     margin: auto auto;
+// }
+
+h3 {
+    text-align: right;
+}
+
+// .phone-bt {
+//     margin-left: auto;
+//     margin-right: auto;
+//     margin-top: 40px;
+//     border-radius: 25px;
+//     width: 180px;
+//     height: 80px;
+//     font-size: 25px;
+//     background-color: greenyellow;
+//     font-weight: bold;
+//     border: 2px solid green;
+// }
+
+// .control-button-container {
+//     width: 637px;
+//     display: flex;
+//     margin: 0 auto;
+// }
+
+// .control-button {
+//     margin-left: auto;
+//     margin-right: auto;
+//     margin-top: 40px;
+//     border-radius: 25px;
+//     width: 180px;
+//     height: 80px;
+//     font-size: 25px;
+//     background-color: greenyellow;
+//     font-weight: bold;
+//     border: 2px solid green;
+    
+// }
+
+
+
+// .box{
+//     width: 600px;
+//     height: fit-content;
+//     display: flex;
+//     justify-content: center;
+//     align-items: center;
+// }
+.outer-container {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    // align-items: center;
+  }
+
+  .box {
+    width: 600px;
+    height: fit-content;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f0f0f0; /* Optional: for better visibility */
+    padding: 20px; /* Optional: add some padding */
+  }
+  
+  .vertical-line {
+    height: 300px;
+    // margin-right: 30px;
+    width: 1px;
+    background-color: #000; /* Change color as needed */
+  }
+  img{
+    width: 200px;
+    height: 200px;
+  }
+  .line{
+    display: flex;
+    justify-content: center;
+  }
+//   .col{
+//      padding: 10px;
+//   }
+
+
+// .vertical-line {
+//     position: absolute;
+//     // top: 10%;
+//     // left: 50%;
+//     // left: 100px;
+//     height: 30%;
+//     width: 1px;
+//     background-color: #000; // Change color as needed
+//     // transform: translateX(-50%);
+// }
+

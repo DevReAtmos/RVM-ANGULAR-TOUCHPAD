@@ -24,7 +24,7 @@ export class PhoneComponent implements OnInit{
   nextPressed(){
     if(this.phoneNumber.length == 10){
       this.setPhoneNumberOnLocalStorage(this.phoneNumber);
-      this.router.navigateByUrl('/thank');
+      this.router.navigateByUrl('/qr-code');
     }else{
       this.isPhoneNumberInvalid = true;
       setTimeout(() => {
@@ -36,6 +36,8 @@ export class PhoneComponent implements OnInit{
 
   //  If user has pressed enter then this Data should go Admin panel
   cancelPressed(){
+    let data = this.machineDataService.getSavedData();
+    this.machineDataService.updateMachineData(data)
     this.router.navigate(['/home']);
   }
 

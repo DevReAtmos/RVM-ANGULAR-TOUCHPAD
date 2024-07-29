@@ -19,7 +19,6 @@ export class QrcodeComponent implements OnInit{
   Location ='';
   city ="";
 
-
   data: any = {
     // dataID: '',
     machineID: '',
@@ -115,6 +114,7 @@ export class QrcodeComponent implements OnInit{
   getData(){
     let data = this.machineDataService.getSavedData();
     console.log("User data",data);
+    this.machineDataService.updateMachineData(data);
    
     
     // this.dataString = data; 
