@@ -19,7 +19,7 @@ export class QrcodeComponent implements OnInit{
   Location ='';
   city ="";
 
-  data: {};
+  data: any;
 
   
   dataString:string = '';
