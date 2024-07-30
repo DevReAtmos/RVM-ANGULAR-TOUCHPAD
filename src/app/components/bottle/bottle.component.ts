@@ -85,7 +85,6 @@ export class BottleComponent implements OnInit{
         router.navigate(['/home']);
       });
 
-
       
     this.activatedRoute.data.subscribe(
       (data:any) => {
@@ -130,6 +129,7 @@ export class BottleComponent implements OnInit{
    }
 
   ngOnInit() { }
+
 //  here identifying that is bottle crushing or cans or polybag 
   crush(dataID: string, bottle: boolean, can: boolean, polybag: boolean){
     let trigger = polybag? false: true;
@@ -199,8 +199,31 @@ export class BottleComponent implements OnInit{
   decider(data:any){
     if(!this.isCrushing){
        console.log("data are",data);
+       
+       this.sensorsService.checkFaulty(data.counter).subscribe(
+        (res:any)=>{
+           console.log("received response",res);
+           if(res['counter'] =='false'){
+            // this.totalBottleCount = this.totalBottleCount + 1;
+            // this.crush(this.dataID, true, false, false);
+            if(data.bottleStatus && (data.weight > 0 && data.weight < 100)){ 
+              console.log("bottle status",data.bottleStatus);
+              console.log("weight of bottle",data.weight); //weight
+              this.isCrushing = true;
+              this.hideButtons = true;
+              this.totalBottleCount = this.totalBottleCount + 1;
+              // Adding weight for bottles 
+              this.totalWeightBottle = this.totalWeightBottle + data.weight;
+              console.log("Total bottle weight right now",this.totalWeightBottle);
+              this.counter = 60;
+              this.crush(this.dataID, true, false, false);
+            }
+           }
+        }
+       )
+
       //for bottle        
-      if(data.bottleStatus && (data.weight > 0 && data.weight < 100)){
+      if(data.bottleStatus && (data.weight > 0 && data.weight < 100)){ 
         console.log("bottle status",data.bottleStatus);
         console.log("weight of bottle",data.weight); //weight
         this.isCrushing = true;
@@ -211,7 +234,8 @@ export class BottleComponent implements OnInit{
         console.log("Total bottle weight right now",this.totalWeightBottle);
         this.counter = 60;
         this.crush(this.dataID, true, false, false);
-      }else if(data.bottleStatus && data.weight > 100){
+      }
+      else if(data.bottleStatus && data.weight > 100){
         this.counter = 60;
         this.isCrushing = true;
         this.hideButtons = true;
@@ -239,7 +263,8 @@ export class BottleComponent implements OnInit{
         console.log("Total can weight right now",this.totalWeightCans);
         this.counter = 60;
         this.crush(this.dataID, false, true, false);
-      }else if(data.metal && data.weight > 30){
+      }
+      else if(data.metal && data.weight > 30){
         this.isCrushing = true;
         this.hideButtons = true;
         this.counter = 60;
@@ -249,6 +274,7 @@ export class BottleComponent implements OnInit{
 
     }
   }
+
 
   saveData(){
     let data = {
@@ -271,7 +297,7 @@ export class BottleComponent implements OnInit{
 
   back(){
     this.disableButton = true;
-    this.saveData();
+    // this.saveData();
     this.savedData();
     sessionStorage.clear();
     this.router.navigate(['/home']);
@@ -281,7 +307,7 @@ export class BottleComponent implements OnInit{
 
   next(){
     this.disableButton = true;
-    this.saveData();
+    // this.saveData();
     this.savedData();
     // this.savedData();
     // this.router.navigate(['/qr-code'], {queryParams: {totalBottleCount: this.totalBottleCount, totalCanCount: this.totalCanCount, totalPolybagCount: this.totalPolybagCount, totalWeightBottle :this.totalWeightBottle,totalWeightCans :this.totalWeightCans , dataID: this.dataID, machineID: this.machineID, timeStamp: this.timeStamp}});
@@ -296,16 +322,20 @@ export class BottleComponent implements OnInit{
   //  Created saved data function , so that user when opt back button then their data will store locally
   // and will appear in admin screen
   savedData(){
+   
     this.SavedData ={
       totalBottleCount: this.totalBottleCount,
-      totalCanCount:this.totalBottleCount,
+      totalCanCount:this.totalCanCount ,
       totalPolybagCount:this.totalPolybagCount,
       totalWeightBottle:this.totalWeightBottle,
       totalWeightCans:this.totalWeightCans,
       phoneNumber :''
     }
-     this.machineData.setSaveDataOnLocalStorage(this.savedData);
-     this.machineData.updateMachineData(this.SavedData)
+
+     this.machineData.setSaveDataOnLocalStorage(this.SavedData);
+     let data = this.machineData.getSavedData();
+     console.log("After retriving data from local",data);
+     this.machineData.updateMachineData(data);
 
     // sessionStorage.setItem('data', this.SavedData);
   }

@@ -31,8 +31,8 @@ export class MachineDataComponent implements OnInit{
       this.totalBottles = 0;
       this.totalCans = 0;
       this.totalPolybags = 0;
-      this.totalWeightBottle = 0;
-      this.totalWeightCans = 0;
+      this.totalWeightBottle = 0.0;
+      this.totalWeightCans = 0.0;
       this.toastr.warning("Local Data Counter Reset", "Warning");
     },
     (err:any) => {

@@ -29,6 +29,7 @@ export class MachineDataService {
   }
 
   updateMachineData(data:any){
+    console.log("data that posting on back-end",data)
     return this.http.post(this.apiUrl + '/update-machine-data', data);
   }
 

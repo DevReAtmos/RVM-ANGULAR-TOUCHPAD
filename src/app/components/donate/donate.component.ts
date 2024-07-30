@@ -110,7 +110,8 @@ startTimer() {
     //   polybags: this.data.plastic,
     // };
     if(destination == 'donate'){
-      this.machineDataService.updateMachineData(this.dataToPostAdmin)
+      this.navigateToDestination(destination);
+      // this.machineDataService.updateMachineData(this.dataToPostAdmin)
       // this.dataService.postUserData(this.dataToPostAdmin).subscribe(
       //   (response: any) => {
       //     console.log(response);
