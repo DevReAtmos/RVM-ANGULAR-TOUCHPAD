@@ -304,7 +304,8 @@ export class BottleComponent implements OnInit{
       totalWeightCans:this.totalWeightCans,
       phoneNumber :''
     }
-     this.machineData.setSaveDataOnLocalStorage(this.savedData);
+
+     this.machineData.setSaveDataOnLocalStorage(this.SavedData);
      this.machineData.updateMachineData(this.SavedData)
 
     // sessionStorage.setItem('data', this.SavedData);
