@@ -33,16 +33,19 @@ export class MachineDataService {
   }
 
   setSaveDataOnLocalStorage(savedData:any){
-    sessionStorage.setItem('data', savedData);
+    console.log("------------data that saved on local-------------->",savedData );
+    sessionStorage.setItem('data', JSON.stringify(savedData));
   }
 
   getSavedData(){
     let data = sessionStorage.getItem('data');
+    console.log("------------data that get on local-------------->",data );
     return data ? JSON.parse(data) : null;
   }
 
   setMachineInfoStoreLocally(data:any){
-    sessionStorage.setItem('machine' ,data)
+    console.log(data)
+    sessionStorage.setItem('machine' ,JSON.stringify(data))
   }
 
   getMachineInfoStoreLocally(){

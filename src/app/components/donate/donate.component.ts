@@ -4,7 +4,7 @@ import { ToastrService } from 'ngx-toastr';
 import { Subscription, timer } from 'rxjs';
 import { DataService } from 'src/app/shared/services/data.service';
 import { MachineDataService } from 'src/app/shared/services/machine-data.service';
-MachineDataService
+
 
 @Component({
   selector: 'app-donate',

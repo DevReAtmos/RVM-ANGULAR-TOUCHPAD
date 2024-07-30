@@ -56,19 +56,20 @@ export class PhoneComponent implements OnInit{
 
   setPhoneNumberOnLocalStorage(phoneNumber:String){
     let data = this.machineDataService.getSavedData();
-    console.log(data);
+    console.log("==============> in setphone method",data);
     if (!data) {
-      data = {
-        totalBottleCount: 0,
-        totalCanCount: 0,
-        totalPolybagCount: 0,
-        totalWeightBottle: 0,
-        totalWeightCans: 0,
-        phoneNumber: ''
-      };
+      // data = {
+      //   totalBottleCount: 0,
+      //   totalCanCount: 0,
+      //   totalPolybagCount: 0,
+      //   totalWeightBottle: 0,
+      //   totalWeightCans: 0,
+      //   phoneNumber: ''
+      // };
     }
     data.phoneNumber = phoneNumber;
     this.machineDataService.setSaveDataOnLocalStorage(data);
+    this.machineDataService.updateMachineData(data);
   }
 
   ngOnDestroy(){

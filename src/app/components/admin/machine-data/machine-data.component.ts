@@ -41,9 +41,10 @@ export class MachineDataComponent implements OnInit{
   }
 // Admin Panel visible data
   getData(){
-    let data = this.machineDataServie.getSavedData();
-    console.log("debugging statement of saved data",data);
+   
+    // console.log("debugging statement of saved data",data);
     this.machineDataServie.getMachineData().subscribe((res:any) => {
+
       this.totalBottles = res.bottles;
       this.totalCans = res.cans;
       this.totalPolybags = res.polybags;

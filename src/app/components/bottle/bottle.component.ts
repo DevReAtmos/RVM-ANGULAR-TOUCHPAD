@@ -75,7 +75,7 @@ export class BottleComponent implements OnInit{
 
         this.dataID = this.machineID + this.timeStamp;
         this.machineInfo ={
-          mcid : this.machineData,
+          mcid : data.mcid,
           city : data.city
         }
         this.machineData.setMachineInfoStoreLocally(this.machineInfo);
@@ -120,6 +120,7 @@ export class BottleComponent implements OnInit{
           switchMap( () => this.sensorsService.getSensorsData())
         ).subscribe(
           (data: any) => {
+            console.log("weights are",data);
             this.decider(data);
           },(err) => {
             toastr.error("Something went wrong please try again later");
@@ -200,13 +201,14 @@ export class BottleComponent implements OnInit{
        console.log("data are",data);
       //for bottle        
       if(data.bottleStatus && (data.weight > 0 && data.weight < 100)){
-        console.log(data.bottleStatus);
-        console.log(data.weight);
+        console.log("bottle status",data.bottleStatus);
+        console.log("weight of bottle",data.weight); //weight
         this.isCrushing = true;
         this.hideButtons = true;
         this.totalBottleCount = this.totalBottleCount + 1;
         // Adding weight for bottles 
-        this.totalWeightBottle += data.weight;
+        this.totalWeightBottle = this.totalWeightBottle + data.weight;
+        console.log("Total bottle weight right now",this.totalWeightBottle);
         this.counter = 60;
         this.crush(this.dataID, true, false, false);
       }else if(data.bottleStatus && data.weight > 100){
@@ -233,7 +235,8 @@ export class BottleComponent implements OnInit{
         this.isCrushing = true;
         this.hideButtons = true;
         this.totalCanCount = this.totalCanCount + 1;
-        this.totalBottleCount += data.weight;
+        this.totalWeightCans = this.totalWeightCans + data.weight;
+        console.log("Total can weight right now",this.totalWeightCans);
         this.counter = 60;
         this.crush(this.dataID, false, true, false);
       }else if(data.metal && data.weight > 30){
