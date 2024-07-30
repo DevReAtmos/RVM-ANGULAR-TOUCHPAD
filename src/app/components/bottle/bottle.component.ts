@@ -298,14 +298,17 @@ export class BottleComponent implements OnInit{
   savedData(){
     this.SavedData ={
       totalBottleCount: this.totalBottleCount,
-      totalCanCount:this.totalBottleCount,
+      totalCanCount:this.totalCanCount ,
       totalPolybagCount:this.totalPolybagCount,
       totalWeightBottle:this.totalWeightBottle,
       totalWeightCans:this.totalWeightCans,
       phoneNumber :''
     }
-     this.machineData.setSaveDataOnLocalStorage(this.savedData);
-     this.machineData.updateMachineData(this.SavedData)
+
+     this.machineData.setSaveDataOnLocalStorage(this.SavedData);
+     let data = this.machineData.getMachineData();
+     console.log("After retriving data from local",data);
+     this.machineData.updateMachineData(data);
 
     // sessionStorage.setItem('data', this.SavedData);
   }

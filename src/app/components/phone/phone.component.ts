@@ -36,8 +36,8 @@ export class PhoneComponent implements OnInit{
 
   //  If user has pressed enter then this Data should go Admin panel
   cancelPressed(){
-    let data = this.machineDataService.getSavedData();
-    this.machineDataService.updateMachineData(data);
+    // let data = this.machineDataService.getSavedData();
+    // this.machineDataService.updateMachineData(data);
     sessionStorage.clear();
     this.router.navigate(['/home']);
   }
@@ -67,9 +67,12 @@ export class PhoneComponent implements OnInit{
         phoneNumber: ''
       };
     }
+    else {
+      console.log("Here this statement must print!!");
+    }
     data.phoneNumber = phoneNumber;
     this.machineDataService.setSaveDataOnLocalStorage(data);
-    this.machineDataService.updateMachineData(data);
+    // this.machineDataService.updateMachineData(data);
   }
 
   ngOnDestroy(){
