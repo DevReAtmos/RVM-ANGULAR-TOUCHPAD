@@ -282,6 +282,7 @@ export class BottleComponent implements OnInit{
   next(){
     this.disableButton = true;
     this.saveData();
+    this.savedData();
     // this.savedData();
     // this.router.navigate(['/qr-code'], {queryParams: {totalBottleCount: this.totalBottleCount, totalCanCount: this.totalCanCount, totalPolybagCount: this.totalPolybagCount, totalWeightBottle :this.totalWeightBottle,totalWeightCans :this.totalWeightCans , dataID: this.dataID, machineID: this.machineID, timeStamp: this.timeStamp}});
     this.router.navigateByUrl('/donate');
