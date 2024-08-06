@@ -60,11 +60,11 @@ export class MainComponent implements OnInit{
 
       if(data.bottleStatus && (data.weight > 0 && data.weight < 100)){
 
-        this.sensorsService.checkFaulty(this.isfalty).subscribe(
-          (res)=>{
+        // this.sensorsService.checkFaulty(this.isfalty).subscribe(
+        //   (res)=>{
              
-          }
-        )
+        //   }
+        // )
         this.router.navigateByUrl('/bottle');
         this.deactivateSubscription();
       }else if(data.bottleStatus && data.weight > 100){
