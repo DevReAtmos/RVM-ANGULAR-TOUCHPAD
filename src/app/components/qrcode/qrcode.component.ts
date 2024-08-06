@@ -95,6 +95,7 @@ export class QrcodeComponent implements OnInit{
     }
   );
 
+
   // this.dataService.uploadImagesToCloud(this.data.dataID).subscribe(
   //   (data:any) => {
   //     console.log(data);

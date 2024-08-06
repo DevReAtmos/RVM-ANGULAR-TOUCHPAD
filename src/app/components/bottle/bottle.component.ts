@@ -333,7 +333,11 @@ export class BottleComponent implements OnInit{
     }
 
      this.machineData.setSaveDataOnLocalStorage(this.SavedData);
+<<<<<<< HEAD
      let data = this.machineData.getSavedData();
+=======
+     let data = this.machineData.getMachineData();
+>>>>>>> fd4ebf2c7ae0ca2d3c8f66c3aa36b086d0a98f2a
      console.log("After retriving data from local",data);
      this.machineData.updateMachineData(data);
 
