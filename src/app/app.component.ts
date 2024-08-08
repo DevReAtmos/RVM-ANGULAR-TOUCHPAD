@@ -11,32 +11,32 @@ export class AppComponent  {
 
   ngOnInit() {
 
-    document.addEventListener('touchstart', this.handleTouchStart, { passive: false });
-    this.renderer.listen('window', 'touchstart', (e: TouchEvent) => {
-      if (e.touches.length > 1) {
-        e.preventDefault();
-      }
-    });
+    // document.addEventListener('touchstart', this.handleTouchStart, { passive: false });
+    // this.renderer.listen('window', 'touchstart', (e: TouchEvent) => {
+    //   if (e.touches.length > 1) {
+    //     e.preventDefault();
+    //   }
+    // });
 
-    // Prevent pinch-to-zoom on touchmove
-    this.renderer.listen('window', 'touchmove', (e: TouchEvent) => {
-      if (e.touches.length > 1) {
-        e.preventDefault();
-      }
-    });
+    // // Prevent pinch-to-zoom on touchmove
+    // this.renderer.listen('window', 'touchmove', (e: TouchEvent) => {
+    //   if (e.touches.length > 1) {
+    //     e.preventDefault();
+    //   }
+    // });
 
-    // Prevent pinch-to-zoom on gesturestart
-    this.renderer.listen('window', 'gesturestart', (e: Event) => {
-      e.preventDefault();
-    });
+    // // Prevent pinch-to-zoom on gesturestart
+    // this.renderer.listen('window', 'gesturestart', (e: Event) => {
+    //   e.preventDefault();
+    // });
 
-    // Prevent pinch-to-zoom on gesturechange
-    this.renderer.listen('window', 'gesturechange', (e: Event) => {
-      e.preventDefault();
-    });
+    // // Prevent pinch-to-zoom on gesturechange
+    // this.renderer.listen('window', 'gesturechange', (e: Event) => {
+    //   e.preventDefault();
+    // });
   }
 
-  handleTouchStart(event: TouchEvent) {
-    event.preventDefault(); // Prevent default zooming behavior
-  }
+  // handleTouchStart(event: TouchEvent) {
+  //   event.preventDefault(); // Prevent default zooming behavior
+  // }
 }

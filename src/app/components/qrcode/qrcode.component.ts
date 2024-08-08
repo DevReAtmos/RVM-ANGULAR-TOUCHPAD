@@ -4,7 +4,7 @@ import { ToastrService } from 'ngx-toastr';
 import { Subscription, timer } from 'rxjs';
 import { DataService } from 'src/app/shared/services/data.service';
 import { MachineDataService } from 'src/app/shared/services/machine-data.service';
-
+import { v4 as uuidv4 } from 'uuid';
 
 @Component({
   selector: 'app-qrcode',
@@ -61,7 +61,7 @@ export class QrcodeComponent implements OnInit{
     this.getData(); 
     this.localdata =this.machineDataService.getSavedData();
     this.machineinfo = this.machineDataService.getMachineInfoStoreLocally();
-    this.count = this.localdata.bottles + this.localdata.cans
+    this.count = this.localdata.totalBottleCount + this.localdata.totalCanCount
     console.log("Local data value is",this.localdata);
 
     this.data = {
@@ -108,9 +108,9 @@ export class QrcodeComponent implements OnInit{
     Date: this.date,
     Recycled_items: this.count ,
     Location: this.machineinfo.city,
-    Coin_Earned: this.count,
+    Coin_Earned: this.count * 10,
     Phone_no: this.localdata.phoneNumber,
-    transaction_id: "",
+    transaction_id: uuidv4(),
     // valid:true
     };
   }
