@@ -5,180 +5,79 @@ import { Subscription, timer } from 'rxjs';
 import { DataService } from 'src/app/shared/services/data.service';
 import { MachineDataService } from 'src/app/shared/services/machine-data.service';
 
-
 @Component({
   selector: 'app-donate',
   templateUrl: './donate.component.html',
   styleUrls: ['./donate.component.scss']
 })
-export class DonateComponent implements OnInit{
-
-  
-  counter:number = 60;
-
+export class DonateComponent implements OnInit {
+  counter: number = 60;
   timerSubscription: Subscription;
-
-  data: any = { 
-    dataID: '', 
-    machineID: '', 
-    bottles: 0, 
-    cans: 0,
-    plastic: 0,
-  };
-
-  dataString:string = '';
+  dataString: string = '';
   dataToPostAdmin: any;
+  data: any;
+  currentDate = new Date();
+  date = this.currentDate.toISOString();
+  localdata: any;
+  machineinfo: any;
 
   constructor(
     private toastr: ToastrService,
     private router: Router,
     private dataService: DataService,
-    private machineDataService:MachineDataService
-  ){
-    this.dataToPostAdmin = this.machineDataService.getSavedData();
+    private machineDataService: MachineDataService
+  ) {
+    this.localdata = this.machineDataService.getSavedData();
+    this.machineinfo = this.machineDataService.getMachineInfoStoreLocally();
+    this.data = {
+      mcid: this.machineinfo.mcid,
+      bottles: this.localdata.totalBottleCount,
+      cans: this.localdata.totalCanCount,
+      weight: this.localdata.totalWeightBottle + this.localdata.totalWeightCans,
+      date: this.date.split('T')[0], // Assuming you want to send only the date part
+      time: '', // Ensure time is filled as per your requirement
+      city:  this.machineinfo.city, // Assuming city is constant for now
+    };
+
+    this.dataString = JSON.stringify(this.data);
+    console.log("Donate data ----------", this.dataString);
     
-    // this.dataString = JSON.stringify(this.data);
-    // console.log("Data string is ",this.dataString)
     this.timerSubscription = timer(0, 1000).subscribe(() => {
-      if(this.counter > 0){
+      if (this.counter > 0) {
         this.counter--;
-      }else{
+      } else {
         this.timerSubscription.unsubscribe();
         this.router.navigate(['/thank']);
       }
-  });
-  
-  // this.dataService.postUserData(this.dataToPostAdmin).subscribe(
-  //   (data:any) => {
-  //     console.log(data);
-  //   }
-  // );
-
-  // this.dataService.uploadImagesToCloud(this.data.dataID).subscribe(
-  //   (data:any) => {
-  //     console.log(data);
-  //   }
-  // );
+    });
   }
 
-  
-  ngOnInit() { }
+  ngOnInit() {}
 
   ngOnDestroy() {
     if (this.timerSubscription) {
-    this.timerSubscription.unsubscribe();
-  }
-}
-
-startTimer() {
-  this.timerSubscription = timer(0, 1000).subscribe(() => {
-    if (this.counter > 0) {
-      this.counter--;
-    } else {
       this.timerSubscription.unsubscribe();
-      this.router.navigate(['/thank']);
     }
-  });
-}
-
-// postInitialData() {
-//   this.dataService.postUserData(this.data).subscribe(
-//     (data: any) => {
-//       console.log(data);
-//     }
-//   );
-
-//   this.dataService.uploadImagesToCloud(this.data.dataID).subscribe(
-//     (data: any) => {
-//       console.log(data);
-//     }
-//   );
-// }
-
-
+  }
 
   handleImageTap(destination: 'donate' | 'phone') {
     if (this.timerSubscription) {
       this.timerSubscription.unsubscribe();
     }
 
-    // let data = {
-    //   id: this.data.dataID,
-    //   mcid: this.data.machineID,
-    //   bottles: this.data.bottles,
-    //   cans: this.data.cans,
-    //   polybags: this.data.plastic,
-    // };
-    if(destination == 'donate'){
-      this.navigateToDestination(destination);
-      // this.machineDataService.updateMachineData(this.dataToPostAdmin)
-      // this.dataService.postUserData(this.dataToPostAdmin).subscribe(
-      //   (response: any) => {
-      //     console.log(response);
-      //     this.navigateToDestination(destination);
-      //   },
-      //   (error) => {
-      //     console.error('Error posting data:', error);
-      //     // You might want to handle the error, maybe show a toastr message
-      //     this.navigateToDestination(destination);
-      //   }
-      // );
-    }
-    else {
-      this.navigateToDestination(destination);
-    }
-    
-  }
-
-  private navigateToDestination(destination: 'donate' | 'phone') {
     if (destination === 'donate') {
-      this.router.navigate(['/thank']);
+      this.dataService.donatedata(this.dataString).subscribe(
+        (data: any) => {
+          console.log('Data posted successfully:', data);
+          this.router.navigate(['/thank']);
+        },
+        (error) => {
+          console.error('Error posting data:', error);
+          this.router.navigate(['/thank']); // Handle error and navigate
+        }
+      );
     } else {
       this.router.navigate(['/phone']);
     }
   }
-
-
-
-  
-  redirectToDonate() {
-    this.stopTimerAndRedirect('/thank');
-  }
-
-
-  // New method for QR code image click
-  redirectToPhone() {
-    this.stopTimerAndRedirect('/phone');
-  }
-
-  private stopTimerAndRedirect(path: string) {
-    if (this.timerSubscription) {
-      this.timerSubscription.unsubscribe();
-    }
-    this.postDataAndNavigate(path);
-  }
-
-  private postDataAndNavigate(path: string) {
-    let data = {
-      id: this.data.dataID,
-      mcid: this.data.machineID,
-      bottles: this.data.bottles,
-      cans: this.data.cans,
-      polybags: this.data.plastic,
-    };
-
-    this.dataService.postUserData(data).subscribe(
-      (response: any) => {
-        console.log(response);
-        this.router.navigate([path]);
-      },
-      (error) => {
-        console.error('Error posting data:', error);
-        // You might want to handle the error, maybe show a toastr message
-        this.router.navigate([path]);
-      }
-    );
-  }  
-
-
 }

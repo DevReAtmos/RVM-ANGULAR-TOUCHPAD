@@ -67,12 +67,13 @@ export class QrcodeComponent implements OnInit{
     this.data = {
       // dataID: '',
       mcid: this.machineinfo.mcid,
-      phone: this.localdata.phone,
+      phone: this.localdata.phoneNumber,
       bottle: this.localdata.totalBottleCount,
       can: this.localdata.totalCanCount,
       bags: 0,
-      dt: this.date,
+      dt: this.date.split('T')[0],
       time : '',
+      city:  this.machineinfo.city,
       weight: this.localdata.totalWeightBottle + this.localdata.totalWeightCans,
       // transaction_id: "", 
     };
@@ -89,7 +90,7 @@ export class QrcodeComponent implements OnInit{
       }
   });
   
-  this.dataService.postUserData(this.data).subscribe(
+  this.dataService.postUserData(this.dataString).subscribe(
     (data:any) => {
       console.log(data);
     }
@@ -132,11 +133,11 @@ export class QrcodeComponent implements OnInit{
   //  when User pres next button this data will stored on database
   next(){  
 //  Here data is posting in backend
-    this.dataService.postUserData(this.data).subscribe(
-      (data:any) => {
-        console.log(data);
-      }
-    );
+    // this.dataService.postUserData(this.dataString).subscribe(
+    //   (data:any) => {
+    //     console.log(data);
+    //   }
+    // );
     
     this.router.navigate(['/thank']);
   }

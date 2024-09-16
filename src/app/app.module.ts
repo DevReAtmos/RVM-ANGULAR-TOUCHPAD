@@ -31,6 +31,7 @@ import { MachineDataComponent } from './components/admin/machine-data/machine-da
 import { MachineComponent } from './components/admin/machine/machine.component';
 import { HttpClientModule } from '@angular/common/http';
 import { DonateComponent } from './components/donate/donate.component';
+import { RoundPipe } from './round.pipe';
 
 @NgModule({
   declarations: [
@@ -55,7 +56,8 @@ import { DonateComponent } from './components/donate/donate.component';
     BottleErrorComponent,
     MachineDataComponent,
     MachineComponent,
-    DonateComponent
+    DonateComponent,
+    RoundPipe
   ],
   imports: [
     BrowserModule,

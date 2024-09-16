@@ -18,6 +18,7 @@ export class ConveyorCrusherMaintainanceService {
   }
 
   gpioTrigger(pin:number, trig:boolean){
+    console.log("pin and trig value" ,pin ,trig);
     return this.http.post(this.apiUrl + '/gpio-trigger', {"pin": pin, "trig": trig});
   }
 
