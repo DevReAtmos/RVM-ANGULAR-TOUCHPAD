@@ -12,11 +12,18 @@ export class DataService {
     private http: HttpClient
   ) { }
 
-  
+  donatedata(data: any) {
+    console.log("donatedata that passed on python", data);
+    return this.http.post(this.apiUrl + '/donate-data', data, {
+        headers: { 'Content-Type': 'application/json' }
+    });
+}
 
-  postUserData(data:any){
-    return this.http.post(this.apiUrl + '/post-user-data', data);
-  }
+ postUserData(data: any) {
+    return this.http.post(this.apiUrl + '/post-user-data', data, {
+        headers: { 'Content-Type': 'application/json' }
+    });
+}
 
   uploadImagesToCloud(dataID:string){
     return this.http.post(this.apiUrl + '/upload-images-cloud', {dataID: dataID});

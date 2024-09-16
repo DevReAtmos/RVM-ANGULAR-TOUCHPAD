@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription, switchMap, timer, windowToggle } from 'rxjs';
+// import { ConveyorCrusherMaintainanceService } from 'src/app/shared/services/conveyor-crusher-maintainance.service';
 import { SensorsService } from 'src/app/shared/services/sensors.service';
 
 @Component({
@@ -10,12 +11,13 @@ import { SensorsService } from 'src/app/shared/services/sensors.service';
 })
 export class MainComponent implements OnInit{
 
-
+  isfalty = false;
   dataSubscription: Subscription;
 
   constructor(
     private router: Router,
-    private sensorsService: SensorsService
+    private sensorsService: SensorsService,
+   
   ) {
 
       this.dataSubscription = timer(0, 500)
@@ -53,13 +55,24 @@ export class MainComponent implements OnInit{
       this.deactivateSubscription();
     }
     //for bottle
-    if(data.bottleStatus && (data.weight > 0 && data.weight < 100)){
-      this.router.navigateByUrl('/bottle');
-      this.deactivateSubscription();
-    }else if(data.bottleStatus && data.weight > 100){
-      this.router.navigateByUrl('/bottle-error');
-      this.deactivateSubscription();
-    }
+   
+  
+
+      if(data.bottleStatus && (data.weight > 0 && data.weight < 100)){
+
+        // this.sensorsService.checkFaulty(this.isfalty).subscribe(
+        //   (res)=>{
+             
+        //   }
+        // )
+        this.router.navigateByUrl('/bottle');
+        this.deactivateSubscription();
+      }else if(data.bottleStatus && data.weight > 100){
+        this.router.navigateByUrl('/bottle-error');
+        this.deactivateSubscription();
+      }
+    
+   
 
     //for polybag
     if(data.polybag){

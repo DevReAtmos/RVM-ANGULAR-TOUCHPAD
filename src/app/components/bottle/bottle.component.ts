@@ -29,16 +29,22 @@ export class BottleComponent implements OnInit{
   machineID: string = '';
   timeStamp: string = '';
   Location: string ='';
-
+  isvalid :boolean = true;
   dataID: string = '';
   dateTimeObj = new Date();
   status:string = "Bottle is crushing please wait...";
-
+  status1:string ="Please Empty the Bottle OR Container";
+  increment:boolean =false;
   conveyorCrusherData:any;
   counterSubsription: Subscription;
   dataSubscription: Subscription;
+  isBottleDetected:boolean = false;
+  // countsensorSubsription:Subscription;
   SavedData:any;
   machineInfo:any;
+  setTimeoutHandle: any;
+ 
+  inc = false;
   constructor(
     private router: Router,
     private toastr: ToastrService,
@@ -49,6 +55,8 @@ export class BottleComponent implements OnInit{
     private conCrushService: ConveyorCrusherMaintainanceService,
     
   ) {
+
+
     //  This data will receive from back-end
     // "crusher": config["crusher"],
     // "conveyor_fw": config["conveyor_fw"],
@@ -85,8 +93,7 @@ export class BottleComponent implements OnInit{
         router.navigate(['/home']);
       });
 
-
-      
+    //  adding polybag counter
     this.activatedRoute.data.subscribe(
       (data:any) => {
         if(data.polybag){
@@ -94,6 +101,7 @@ export class BottleComponent implements OnInit{
         }
     });
 
+    // counter details
     this.counterSubsription = timer(0,1000).pipe(
       ).subscribe(
           ()=>{
@@ -105,7 +113,7 @@ export class BottleComponent implements OnInit{
           }
         }
       );
-      // this.counterSubsription.unsubscribe();
+  // this.counterSubsription.unsubscribe();
       
   //   data = {
   //     "weight": tempweight,
@@ -115,21 +123,55 @@ export class BottleComponent implements OnInit{
   //     "bottleStatus": bottleStatus
   // }
       //  data  fromate will be this type and this data passed to decided
+
       this.dataSubscription = timer(0, 700).
         pipe(
           switchMap( () => this.sensorsService.getSensorsData())
         ).subscribe(
           (data: any) => {
             console.log("weights are",data);
+
             this.decider(data);
           },(err) => {
             toastr.error("Something went wrong please try again later");
             router.navigate(['/home']);
           });
-    
+
+
+      // this.countsensorSubsription =timer(0.700).pipe(
+      //   switchMap(
+      //     ()=> this.sensorsService.checkFaulty(this.isvalid ))
+      //   ).subscribe(
+      //     (data: any) => {
+      //       console.log(" countsensorSubsription are",data);
+      //        if(data){
+      //         console.log("data value is",data)
+      //         this.increment = data;
+      //        }
+      //        else {
+      //         setTimeout(
+      //           ()=>{
+      //             this.sensorsService.checkFaulty(false).subscribe(
+      //               (res)=>{
+      //                 console.log("moving back to home screen",res)
+      //               }
+                      
+      //             )
+      //           }
+      //         )
+
+      //        }
+      //     },(err) => {
+      //       toastr.error("Something went wrong please try again later");
+      //       router.navigate(['/home']);
+      //     }
+      //   );
+
+      
    }
 
   ngOnInit() { }
+
 //  here identifying that is bottle crushing or cans or polybag 
   crush(dataID: string, bottle: boolean, can: boolean, polybag: boolean){
     let trigger = polybag? false: true;
@@ -154,30 +196,54 @@ export class BottleComponent implements OnInit{
       this.router.navigate(['/home']);
     }
   );
-
-
   }
 
-  reverseConvActive(){
-
-    this.conCrushService.gpioTrigger(this.conveyorCrusherData.conveyor_rw.pin,true)
-    .subscribe(
-      (data:any)=>{
-        setTimeout(()=>{
-          this.resetConvActive();
-        },4000);
-      },(error)=>{
-        this.toastr.error(error.message,'Error');
-      }
-    );
-
+  reverseConvActive() {
+    console.log("reverse con active");
+    
+    // Check if conveyorCrusherData and conveyor_rw are defined
+    if (this.conveyorCrusherData && this.conveyorCrusherData.conveyor_rw) {
+      this.conCrushService.gpioTrigger(this.conveyorCrusherData.conveyor_rw.pin, true)
+        .subscribe(
+          (data: any) => {
+            console.log("getting res for reverse covy", data);
+            setTimeout(() => {
+              this.resetConvActive();
+            }, 4000);
+          },
+          (error) => {
+            this.toastr.error(error.message, 'Error');
+          }
+        );
+    } else {
+      console.error("conveyorCrusherData or conveyor_rw is undefined");
+      this.toastr.error("Conveyor data is not available", "Error");
+    }
   }
+  
+
+  // reverseConvActive(){
+  //   console.log("reverse con active");
+  //   this.conCrushService.gpioTrigger(this.conveyorCrusherData.conveyor_rw.pin,true)
+  //   .subscribe(
+  //     (data:any)=>{
+  //       console.log("getting res for reverse covy",data);
+  //       setTimeout(()=>{
+  //         this.resetConvActive();
+  //       },4000);
+  //     },(error)=>{
+  //       this.toastr.error(error.message,'Error');
+  //     }
+  //   );
+
+  // }
 
   resetConvActive(){
-      
+    console.log("reverse con deactive");
       this.conCrushService.gpioTrigger(this.conveyorCrusherData.conveyor_rw.pin,false)
       .subscribe(
         (data:any)=>{
+          console.log("reset the convy");
           this.isCrushing = false;
           this.hideButtons = false;
         },(error)=>{
@@ -187,37 +253,150 @@ export class BottleComponent implements OnInit{
   
   }
 
-   //   data = {
-  //     "weight": tempweight,
-  //     #"polybag": polybag,
-  //     "metal": metal,
-  //     "binfull": binfull,
-  //     "bottleStatus": bottleStatus
-  // }
+  
   //  this data formated passes here
 
   decider(data:any){
     if(!this.isCrushing){
+      this.status = "Bottle is crushing please wait...";
        console.log("data are",data);
-      //for bottle        
-      if(data.bottleStatus && (data.weight > 0 && data.weight < 100)){
-        console.log("bottle status",data.bottleStatus);
-        console.log("weight of bottle",data.weight); //weight
-        this.isCrushing = true;
-        this.hideButtons = true;
-        this.totalBottleCount = this.totalBottleCount + 1;
-        // Adding weight for bottles 
-        this.totalWeightBottle = this.totalWeightBottle + data.weight;
-        console.log("Total bottle weight right now",this.totalWeightBottle);
-        this.counter = 60;
-        this.crush(this.dataID, true, false, false);
-      }else if(data.bottleStatus && data.weight > 100){
+       let inc = data.counter;
+       console.log("counter value is",data.counter);
+       if(data.bottleStatus && data.weight > 100){
+        console.log("reverse con called");
         this.counter = 60;
         this.isCrushing = true;
         this.hideButtons = true;
         this.reverseConvActive();
         this.toastr.error("Error","Please empty the bottle", {timeOut: 3000});
+     
       }
+       if(inc){
+
+        console.log("counter value is",inc);
+        if(data.bottleStatus && (data.weight > 0 && data.weight < 100)){ 
+          console.log("bottle status",data.bottleStatus);
+          console.log("weight of bottle",data.weight);
+          this.isBottleDetected =true; //weight
+          this.isCrushing = true;
+          this.hideButtons = true;
+          this.isvalid = true;
+          this.totalBottleCount = this.totalBottleCount + 1;
+          clearTimeout(this.setTimeoutHandle);
+          // Adding weight for bottles 
+          this.totalWeightBottle = this.totalWeightBottle + data.weight;
+          console.log("Total bottle weight right now",this.totalWeightBottle);
+          this.counter = 60;
+          this.crush(this.dataID, true, false, false);
+        }
+        // else if(data.bottleStatus &&  data.weight >100){
+        //   console.log("in bottle status else if block ");
+        //   this.counter = 60;
+        //   this.isCrushing = true;
+        //   this.hideButtons = true;
+        //   this.reverseConvActive();
+        //   this.toastr.error("Error","Please empty the bottle", {timeOut: 3000});
+        //   console.log("overweight  of bottle");
+        // }
+
+        if(data.metal && (data.weight > 0 && data.weight < 30)){
+          this.isCrushing = true;
+          this.hideButtons = true;
+          this.totalCanCount = this.totalCanCount + 1;
+          clearTimeout(this.setTimeoutHandle);
+          this.isvalid = true;
+          this.isBottleDetected =true;
+          this.totalWeightCans = this.totalWeightCans + data.weight;
+          console.log("Total can weight right now",this.totalWeightCans);
+          this.counter = 60;
+          this.crush(this.dataID, false, true, false);
+        }
+
+        else if(data.metal && data.weight > 30){
+          this.isCrushing = true;
+          this.hideButtons = true;
+          this.counter = 60;
+          this.reverseConvActive();
+          this.router.navigateByUrl('/can-error');
+        }
+
+       }
+       else{
+        console.log("in else part ",inc);
+        console.log("conveyour trun off ")
+        if(data.bottleStatus ){
+          this.isvalid = true;
+        }
+        // if(this.isvalid ){
+        //   this.isvalid = false;
+        //   console.log("running convy second time");
+        //   this.crush(this.dataID, true, false, false);
+        //   this.setTimeoutHandle = setTimeout(() => { 
+        //     if(this.totalBottleCount == 0 && this.totalCanCount == 0 ){
+        //       this.toastr.error("Error","Please insert bottle", {timeOut: 3000});
+        //       this.router.navigateByUrl('/home');
+        //     }
+        //   }, 8000);
+        // }
+        
+       }
+
+      //  let value = false;
+      //  this.sensorsService.checkFaulty(value).subscribe(
+      //   (res:any)=>{
+      //      console.log("received response",res);
+      //      if(!res['counter']){
+      //       console.log("counter value is",res['counter']);
+      //       // this.totalBottleCount = this.totalBottleCount + 1;
+      //       // this.crush(this.dataID, true, false, false);
+      //         if(data.bottleStatus && (data.weight > 0 && data.weight < 100)){ 
+      //           console.log("bottle status",data.bottleStatus);
+      //           console.log("weight of bottle",data.weight); //weight
+      //           this.isCrushing = true;
+      //           this.hideButtons = true;
+      //           this.totalBottleCount = this.totalBottleCount + 1;
+      //           // Adding weight for bottles 
+      //           this.totalWeightBottle = this.totalWeightBottle + data.weight;
+      //           console.log("Total bottle weight right now",this.totalWeightBottle);
+      //           this.counter = 60;
+      //           this.crush(this.dataID, true, false, false);
+      //         }
+      //         if(data.metal && (data.weight > 0 && data.weight < 30)){
+      //           this.isCrushing = true;
+      //           this.hideButtons = true;
+      //           this.totalCanCount = this.totalCanCount + 1;
+      //           this.totalWeightCans = this.totalWeightCans + data.weight;
+      //           console.log("Total can weight right now",this.totalWeightCans);
+      //           this.counter = 60;
+      //           this.crush(this.dataID, false, true, false);
+      //         }
+      //         else if(data.metal && data.weight > 30){
+      //           this.isCrushing = true;
+      //           this.hideButtons = true;
+      //           this.counter = 60;
+      //           this.reverseConvActive();
+      //           this.router.navigateByUrl('/can-error');
+      //         }
+             
+      //      }
+
+      //   }
+      //  )
+
+      //for bottle        
+      // if(data.bottleStatus && (data.weight > 0 && data.weight < 100)){ 
+      //   console.log("bottle status",data.bottleStatus);
+      //   console.log("weight of bottle",data.weight); //weight
+      //   this.isCrushing = true;
+      //   this.hideButtons = true;
+      //   this.totalBottleCount = this.totalBottleCount + 1;
+      //   // Adding weight for bottles 
+      //   this.totalWeightBottle = this.totalWeightBottle + data.weight;
+      //   console.log("Total bottle weight right now",this.totalWeightBottle);
+      //   this.counter = 60;
+      //   this.crush(this.dataID, true, false, false);
+      // }
+     
 
       //for polybag
       if(data.polybag){
@@ -231,15 +410,16 @@ export class BottleComponent implements OnInit{
       }
 
       //for can
-      if(data.metal && (data.weight > 0 && data.weight < 30)){
-        this.isCrushing = true;
-        this.hideButtons = true;
-        this.totalCanCount = this.totalCanCount + 1;
-        this.totalWeightCans = this.totalWeightCans + data.weight;
-        console.log("Total can weight right now",this.totalWeightCans);
-        this.counter = 60;
-        this.crush(this.dataID, false, true, false);
-      }else if(data.metal && data.weight > 30){
+      // if(data.metal && (data.weight > 0 && data.weight < 30)){
+      //   this.isCrushing = true;
+      //   this.hideButtons = true;
+      //   this.totalCanCount = this.totalCanCount + 1;
+      //   this.totalWeightCans = this.totalWeightCans + data.weight;
+      //   console.log("Total can weight right now",this.totalWeightCans);
+      //   this.counter = 60;
+      //   this.crush(this.dataID, false, true, false);
+      // }
+      if(data.metal && data.weight > 30){
         this.isCrushing = true;
         this.hideButtons = true;
         this.counter = 60;
@@ -249,6 +429,7 @@ export class BottleComponent implements OnInit{
 
     }
   }
+
 
   saveData(){
     let data = {
@@ -271,7 +452,7 @@ export class BottleComponent implements OnInit{
 
   back(){
     this.disableButton = true;
-    this.saveData();
+    // this.saveData();
     this.savedData();
     sessionStorage.clear();
     this.router.navigate(['/home']);
@@ -281,7 +462,7 @@ export class BottleComponent implements OnInit{
 
   next(){
     this.disableButton = true;
-    this.saveData();
+    // this.saveData();
     this.savedData();
     // this.savedData();
     // this.router.navigate(['/qr-code'], {queryParams: {totalBottleCount: this.totalBottleCount, totalCanCount: this.totalCanCount, totalPolybagCount: this.totalPolybagCount, totalWeightBottle :this.totalWeightBottle,totalWeightCans :this.totalWeightCans , dataID: this.dataID, machineID: this.machineID, timeStamp: this.timeStamp}});
@@ -296,9 +477,10 @@ export class BottleComponent implements OnInit{
   //  Created saved data function , so that user when opt back button then their data will store locally
   // and will appear in admin screen
   savedData(){
+   
     this.SavedData ={
       totalBottleCount: this.totalBottleCount,
-      totalCanCount:this.totalBottleCount,
+      totalCanCount:this.totalCanCount ,
       totalPolybagCount:this.totalPolybagCount,
       totalWeightBottle:this.totalWeightBottle,
       totalWeightCans:this.totalWeightCans,
@@ -306,7 +488,16 @@ export class BottleComponent implements OnInit{
     }
 
      this.machineData.setSaveDataOnLocalStorage(this.SavedData);
-     this.machineData.updateMachineData(this.SavedData)
+     let data = this.machineData.getSavedData();
+     console.log("After retriving data from local",data);
+     this.machineData.updateMachineData(data).subscribe((res)=>{
+      console.log('Response from backend:', res);
+     },(error) => {
+      console.error('Error occurred:', error); // Handle any errors here
+    }
+    );
+     
+
 
     // sessionStorage.setItem('data', this.SavedData);
   }

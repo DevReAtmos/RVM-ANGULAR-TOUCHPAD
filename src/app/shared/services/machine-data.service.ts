@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Config } from '../config/config';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient , HttpHeaders } from '@angular/common/http';
+import { Observable, throwError } from 'rxjs';
+import { tap, catchError } from 'rxjs/operators';
 @Injectable({
   providedIn: 'root'
 })
@@ -28,8 +30,38 @@ export class MachineDataService {
     return this.http.post(this.apiUrl + '/update-machine-info', data);
   }
 
-  updateMachineData(data:any){
-    return this.http.post(this.apiUrl + '/update-machine-data', data);
+  // updateMachineData(data:any){
+  //   console.log("data that posting on back-end",data)
+  //    // Create HttpHeaders object
+  // const headers = new HttpHeaders({
+  //   'Content-Type': 'application/json'
+  // });
+  // const url = this.apiUrl + '/update-machine-data';
+  // console.log("printing url",url);
+  //   return this.http.post(url, data ,
+  //     {headers }).subscribe(
+  //       response => {
+  //         console.log('Success:', response);
+  //       },
+  //       error => {
+  //         console.error('Error:', error);
+  //       }
+  //     );
+  // }
+  updateMachineData(data: any): Observable<any> {
+    console.log("Data that is posting to back-end:", data);
+    
+    // Create HttpHeaders object
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json'
+    });
+    
+    const url = `${this.apiUrl}/update-machine-data`;
+    console.log("Printing URL:", url);
+    
+    // Return the observable for further handling
+    return this.http.post(url, data);
+     
   }
 
   setSaveDataOnLocalStorage(savedData:any){

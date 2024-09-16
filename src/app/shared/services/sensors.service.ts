@@ -16,4 +16,8 @@ export class SensorsService {
   getSensorsData(){
     return this.http.get(this.apiUrl + '/get-all-sensor-data');
   }
+
+  checkFaulty(status:any){
+    return this.http.post(this.apiUrl + '/checkfaulty', {"status": status});
+  }
 }
