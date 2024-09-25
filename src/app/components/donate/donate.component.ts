@@ -20,6 +20,7 @@ export class DonateComponent implements OnInit {
   date = this.currentDate.toISOString();
   localdata: any;
   machineinfo: any;
+  isProcessing: boolean = false;
 
   constructor(
     private toastr: ToastrService,
@@ -61,9 +62,16 @@ export class DonateComponent implements OnInit {
   }
 
   handleImageTap(destination: 'donate' | 'phone') {
+    if (this.isProcessing) {
+      return; // Exit if already processing
+    }
+    
+    this.isProcessing = true;
+
     if (this.timerSubscription) {
       this.timerSubscription.unsubscribe();
     }
+
 
     if (destination === 'donate') {
       this.dataService.donatedata(this.dataString).subscribe(
