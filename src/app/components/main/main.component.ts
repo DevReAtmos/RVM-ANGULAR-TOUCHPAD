@@ -56,15 +56,8 @@ export class MainComponent implements OnInit{
     }
     //for bottle
    
-  
 
-      if(data.bottleStatus && (data.weight > 0 && data.weight < 100)){
-
-        // this.sensorsService.checkFaulty(this.isfalty).subscribe(
-        //   (res)=>{
-             
-        //   }
-        // )
+      if(data.bottleStatus && data.metal == false && (data.weight > 6 && data.weight < 100) ){
         this.router.navigateByUrl('/bottle');
         this.deactivateSubscription();
       }else if(data.bottleStatus && data.weight > 100){
@@ -73,7 +66,6 @@ export class MainComponent implements OnInit{
       }
     
    
-
     //for polybag
     if(data.polybag){
       this.router.navigateByUrl('/bottle',{state: {polybag: true}});
@@ -81,13 +73,15 @@ export class MainComponent implements OnInit{
     }
 
     //for cans
-    if(data.metal && (data.weight>8 && data.weight<30)){
+    if(data.metal && (data.weight>6 && data.weight<30)){
+      console.log("metal detected");
       this.router.navigateByUrl('/bottle');
       this.deactivateSubscription();
-    }else if(data.metal){
+    }else if(data.metal && (data.weight < 0 && data.weight > 40)){
       this.router.navigateByUrl('/bottle-error');
       this.deactivateSubscription();
     }
+
   }
   ngOnDestroy(){
 
