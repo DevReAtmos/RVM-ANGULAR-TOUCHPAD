@@ -18,6 +18,7 @@ export class FlapsComponent implements OnInit{
   ) { 
     this.flapService.getFlapInfo().subscribe((data:any)=>{
       this.flapData = data;
+      console.log("flap data",this.flapData);
     });
   }
 
@@ -73,6 +74,7 @@ export class FlapsComponent implements OnInit{
       this.toastr.error('Shutter up Trigger Failed', 'Error!');
     });
   }
+
   shutter_down() {
     this.flapService.triggerFlap(this.flapData.shutter_down.pin, true).subscribe((data:any)=>{
       this.btnDisabled = true;

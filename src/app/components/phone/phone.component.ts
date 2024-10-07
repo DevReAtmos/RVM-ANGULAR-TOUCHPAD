@@ -36,10 +36,10 @@ export class PhoneComponent implements OnInit{
     
     if(this.phoneNumber.length == 10){
       this.setPhoneNumberOnLocalStorage(this.phoneNumber);
-      this.submitData();
+      // this.submitData();
 
       console.log("Local data value is",this.localdata);
-      this.router.navigateByUrl('/thank');
+      this.router.navigateByUrl('/qr-code');
     }else{
       this.isPhoneNumberInvalid = true;
       setTimeout(() => {
