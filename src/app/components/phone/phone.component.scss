@@ -62,7 +62,7 @@ h1{
 
 .controllButton{
 
-    width: 161px;
+    width: 120px;
     background-color: #31B2E8;
     height: 65px;
     border-radius: 25px;
@@ -71,4 +71,46 @@ h1{
     font-family: 'Roboto', sans-serif;
     border: 4px solid #3b2c84;
     filter: drop-shadow(4px 4px 2px #C4c4c4);
+}
+
+@media (max-width: 584px) {
+    .my-container {
+        height: 80vh; /* Adjust height for smaller screens */
+    }
+
+    h1 {
+        font-size: 24px; /* Adjust font size for heading */
+    }
+
+    .phone-box {
+        width: 90%; /* Make the phone box width responsive */
+        height: auto; /* Allow height to adjust automatically */
+        padding: 10px; /* Add padding for better appearance */
+    }
+
+    .numpadButton {
+        height: 50px; /* Adjust button size for smaller screens */
+        width: 50px;
+        font-size: 24px; /* Adjust font size for buttons */
+    }
+
+    .cdButton {
+        height: 50px; /* Adjust button size for smaller screens */
+        width: 70px; /* Adjust width for smaller screens */
+        font-size: 16px; /* Adjust font size for buttons */
+    }
+
+    .controllButton {
+        // width: 100%; /* Make the control button full width */
+        font-size: 20px; /* Adjust font size for buttons */
+    }
+
+    .keyPad {
+        width: 100%; /* Make the keypad full width */
+        flex-direction: row; /* Adjust the flex direction if needed */
+    }
+
+    .row-margin {
+        margin-top: 30px; /* Reduce margin for smaller screens */
+    }
 }
