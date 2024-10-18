@@ -1,16 +1,70 @@
 .container{
    
-    max-height: 80px !important;
-    margin-bottom: 40px;
+    max-height: 100px !important;
+    margin-bottom: 10px; //40
+    max-width: 100%;
 }
 
 .right{
     margin-left: auto;
+    margin-top: 5px;
+    max-height: 100px !important;
 }
+.right ,img{
+    margin-left: auto;
+   
+} 
 .left{
-    margin-right: auto;
+     margin-right: auto;
+    height: 300px;
+    margin-left: 20px;
 }
 
-img{
-    max-height: 70px !important;
+.left ,img{
+    max-height: 100px !important;
 }
+
+
+.hide-header-images img {
+    display: none !important;
+}
+
+
+
+// .container {
+//     max-height: 80px !important;
+//     margin-bottom: 40px;
+// }
+
+// img {
+//     max-height: 70px !important;
+//     width: auto;
+//     max-width: 100%;
+// }
+
+// .left {
+//     display: block;
+//     width: 150%; /* Adjust the width percentage to increase the size */
+//     max-width: 350px; /* Max width for larger left image */
+//     object-fit: contain; /* Ensure the image scales without distortion */
+//     margin-right: auto;
+// }
+
+// .right {
+//     display: block;
+//     width: 100%;
+//     max-width: 200px;
+//     object-fit: contain;
+//     margin-left: auto;
+// }
+
+// // .d-flex {
+// //     // display: flex;
+// //     justify-content: space-between; /* Centers the images horizontally */
+// //     // align-items: center; /* Centers the images vertically */
+// // }
+
+// .hide-header-images img {
+//     display: none !important;
+// }
+

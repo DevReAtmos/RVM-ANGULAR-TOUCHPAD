@@ -59,7 +59,10 @@ export class PhoneComponent implements OnInit{
   }
 
   numPressed(number:string){
-    this.phoneNumber += number;
+    if (this.phoneNumber.length < 10) {
+      this.phoneNumber +=  number;
+  }
+    // this.phoneNumber += number;
   }
 
   clear(){
