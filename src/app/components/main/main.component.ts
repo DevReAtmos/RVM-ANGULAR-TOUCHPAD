@@ -12,7 +12,7 @@ import { SensorsService } from 'src/app/shared/services/sensors.service';
 export class MainComponent implements OnInit{
 
   isfalty = false;
-  // dataSubscription: Subscription;
+  dataSubscription: Subscription;
 
   constructor(
     private router: Router,
@@ -20,21 +20,21 @@ export class MainComponent implements OnInit{
    
   ) {
 
-      // this.dataSubscription = timer(0, 500)
-      // .pipe(
-      //   switchMap(
-      //     () => this.sensorsService.getSensorsData()
-      //   )
-      // ).subscribe(
-      //   (data: any) => {
+      this.dataSubscription = timer(0, 500)
+      .pipe(
+        switchMap(
+          () => this.sensorsService.getSensorsData()
+        )
+      ).subscribe(
+        (data: any) => {
   
-      //     this.decider(data);
+          this.decider(data);
 
-      //   },
-      //   (error) => {
-      //     window.location.reload();
-      //   }
-      // )
+        },
+        (error) => {
+          window.location.reload();
+        }
+      )
 
    }
  
@@ -42,9 +42,9 @@ export class MainComponent implements OnInit{
 
   }
 
-  // deactivateSubscription(){
-  //   this.dataSubscription.unsubscribe();
-  // }
+  deactivateSubscription(){
+    this.dataSubscription.unsubscribe();
+  }
 
 
   decider(data: any){
@@ -52,40 +52,40 @@ export class MainComponent implements OnInit{
     //for binful
     if(data.binfull){
       this.router.navigateByUrl('/filled-win');
-      // this.deactivateSubscription();
+      this.deactivateSubscription();
     }
     //for bottle
    
 
       if(data.bottleStatus && data.metal == false && (data.weight > 6 && data.weight < 100) ){
         this.router.navigateByUrl('/bottle');
-        // this.deactivateSubscription();
+        this.deactivateSubscription();
       }else if(data.bottleStatus && data.weight > 100){
         this.router.navigateByUrl('/bottle-error');
-        // this.deactivateSubscription();
+        this.deactivateSubscription();
       }
     
    
     //for polybag
     if(data.polybag){
       this.router.navigateByUrl('/bottle',{state: {polybag: true}});
-      // this.deactivateSubscription();
+       this.deactivateSubscription();
     }
-
+    
     //for cans
     if(data.metal && (data.weight>6 && data.weight<30)){
       console.log("metal detected");
       this.router.navigateByUrl('/bottle');
-      // this.deactivateSubscription();
+      this.deactivateSubscription();
     }else if(data.metal && (data.weight < 0 && data.weight > 40)){
       this.router.navigateByUrl('/bottle-error');
-      // this.deactivateSubscription();
+      this.deactivateSubscription();
     }
 
   }
   ngOnDestroy(){
 
-    // this.dataSubscription.unsubscribe();
+   this.dataSubscription.unsubscribe();
 
   }
 
