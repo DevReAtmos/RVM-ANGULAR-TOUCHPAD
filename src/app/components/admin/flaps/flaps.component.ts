@@ -18,6 +18,7 @@ export class FlapsComponent implements OnInit{
   ) { 
     this.flapService.getFlapInfo().subscribe((data:any)=>{
       this.flapData = data;
+      console.log("flap data",this.flapData);
     });
   }
 
@@ -57,5 +58,38 @@ export class FlapsComponent implements OnInit{
     });
   }
 
+  shutter_up() {
+    this.flapService.triggerFlap(this.flapData.shutter_up.pin, true).subscribe((data:any)=>{
+      this.btnDisabled = true;
+      this.toastr.success('Shutter up Triggerred', 'Success!');
+      setTimeout(() => {
+        this.flapService.triggerFlap(this.flapData.shutter_up.pin, false).subscribe((data:any)=>{
+          this.btnDisabled = false;
+        }, (error)=>{
+          this.toastr.error('Shutter up Trigger Failed', 'Error!');
+        }
+      );
+      }, 1000);
+    }, (error)=>{
+      this.toastr.error('Shutter up Trigger Failed', 'Error!');
+    });
+  }
+
+  shutter_down() {
+    this.flapService.triggerFlap(this.flapData.shutter_down.pin, true).subscribe((data:any)=>{
+      this.btnDisabled = true;
+      this.toastr.success('Shutter down Triggerred', 'Success!');
+      setTimeout(() => {
+        this.flapService.triggerFlap(this.flapData.shutter_down.pin, false).subscribe((data:any)=>{
+          this.btnDisabled = false;
+        }, (error)=>{
+          this.toastr.error('Shutter down Trigger Failed', 'Error!');
+        }
+      );
+      }, 1000);
+    }, (error)=>{
+      this.toastr.error('Shutter  down Trigger Failed', 'Error!');
+    });
+  }
 
 }
