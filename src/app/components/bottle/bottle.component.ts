@@ -236,7 +236,7 @@ export class BottleComponent implements OnInit{
               this.toastr.error("Error","Please empty the bottle", {timeOut: 3000});
             }
 
-            if(data.metal && (data.weight > 0 && data.weight < 30)){
+            if(data.metal && (data.weight > 6 && data.weight < 40)){
               this.isCrushing = true;
               this.hideButtons = true;
               this.totalCanCount = this.totalCanCount + 1;
@@ -248,7 +248,7 @@ export class BottleComponent implements OnInit{
               this.counter = 60;
               this.crush(this.dataID, false, true, false);
             }
-            else if(data.metal && data.weight > 30){
+            else if(data.metal && data.weight > 40){
               this.isCrushing = true;
               this.hideButtons = true;
               this.counter = 60;

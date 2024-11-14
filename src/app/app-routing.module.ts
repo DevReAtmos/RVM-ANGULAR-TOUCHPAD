@@ -81,7 +81,7 @@ const routes: Routes = [
       },
       {
         path: '',
-        redirectTo: 'conveyor-crusher', pathMatch: 'full'
+        redirectTo: 'machine-data', pathMatch: 'full'
       },
       { 
         path: 'weight',

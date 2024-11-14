@@ -74,16 +74,17 @@ export class DonateComponent implements OnInit {
 
 
     if (destination === 'donate') {
-      this.dataService.donatedata(this.dataString).subscribe(
-        (data: any) => {
-          console.log('Data posted successfully:', data);
-          this.router.navigate(['/thank']);
-        },
-        (error) => {
-          console.error('Error posting data:', error);
-          this.router.navigate(['/thank']); // Handle error and navigate
-        }
-      );
+      this.router.navigate(['/thank']);
+      // this.dataService.donatedata(this.dataString).subscribe(
+      //   (data: any) => {
+      //     console.log('Data posted successfully:', data);
+      //     this.router.navigate(['/thank']);
+      //   },
+      //   (error) => {
+      //     console.error('Error posting data:', error);
+      //     this.router.navigate(['/thank']); // Handle error and navigate
+      //   }
+      // );
     } else {
       this.router.navigate(['/phone']);
     }
