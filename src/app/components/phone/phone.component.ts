@@ -34,7 +34,7 @@ export class PhoneComponent implements OnInit{
 
   nextPressed(){
     
-    if(this.phoneNumber.length == 8){
+    if(this.phoneNumber.length == 7){
       this.setPhoneNumberOnLocalStorage(this.phoneNumber);
       // this.submitData();
 
@@ -59,7 +59,7 @@ export class PhoneComponent implements OnInit{
   }
 
   numPressed(number:string){
-    if (this.phoneNumber.length < 8) {
+    if (this.phoneNumber.length < 7) {
       this.phoneNumber +=  number;
   }
     // this.phoneNumber += number;
