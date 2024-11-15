@@ -212,7 +212,7 @@ export class BottleComponent implements OnInit{
        console.log("counter value is",data.counter);
        if(inc){
         console.log("counter value is",inc);
-            if(data.bottleStatus && (data.weight > 6 && data.weight < 100)){ 
+            if(data.bottleStatus && (data.weight > 6 && data.weight < 70)){ 
               console.log("bottle status",data.bottleStatus);
               console.log("weight of bottle",data.weight);
               this.isBottleDetected =true; //weight
@@ -227,7 +227,7 @@ export class BottleComponent implements OnInit{
               this.counter = 60;
               this.crush(this.dataID, true, false, false);
             }
-            else if(data.bottleStatus && data.weight > 100){
+            else if(data.bottleStatus && data.weight > 70){
               this.counter = 60;
               this.isCrushing = true;
               this.hideButtons = true;
@@ -276,7 +276,7 @@ export class BottleComponent implements OnInit{
           //   }, 8000);
           // }       
        }   
-      if(data.bottleStatus && data.weight > 100){
+      if(data.bottleStatus && data.weight > 70){
         this.counter = 60;
         this.isCrushing = true;
         this.hideButtons = true;
@@ -297,7 +297,7 @@ export class BottleComponent implements OnInit{
       }
 
      
-      if(data.metal && data.weight > 30){
+      if(data.metal && data.weight > 40){
         this.isCrushing = true;
         this.hideButtons = true;
         this.counter = 60;
