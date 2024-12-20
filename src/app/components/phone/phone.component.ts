@@ -58,8 +58,12 @@ export class PhoneComponent implements OnInit{
     this.router.navigate(['/home']);
   }
 
+  // numPressed(number:string){
+  //   this.phoneNumber += number;
+  // }
+
   numPressed(number:string){
-    if (this.phoneNumber.length < 8) {
+    if (this.phoneNumber.length < 10) {
       this.phoneNumber +=  number;
   }
     // this.phoneNumber += number;

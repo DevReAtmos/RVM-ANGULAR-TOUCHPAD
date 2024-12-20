@@ -92,6 +92,4 @@ export class FlapsComponent implements OnInit{
     });
   }
 
-
-
 }
