@@ -21,13 +21,13 @@ export class HeaderComponent {
   ngOnInit(){
     this.updateImageVisibility(this.router.url);
 
-    // Subscribe to router events to detect navigation changes
-    this.router.events
-      .pipe(filter(event => event instanceof NavigationEnd))
-      .subscribe(event => {
-        // Type assertion to ensure `event` is of type `NavigationEnd`
-        this.updateImageVisibility((event as NavigationEnd).url);
-      });
+    // // Subscribe to router events to detect navigation changes
+    // this.router.events
+    //   .pipe(filter(event => event instanceof NavigationEnd))
+    //   .subscribe(event => {
+    //     // Type assertion to ensure `event` is of type `NavigationEnd`
+    //     this.updateImageVisibility((event as NavigationEnd).url);
+    //   });
   }
 
   private updateImageVisibility(url: string) {

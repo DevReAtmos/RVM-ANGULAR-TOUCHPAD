@@ -42,7 +42,7 @@ export class PasswordComponent implements OnInit{
   }
 
   numPressed(number:string){
-    if (this.password.length < 10) {
+    if (this.password.length < 5) {
       this.password +=  number;
   }
     // this.password += number;

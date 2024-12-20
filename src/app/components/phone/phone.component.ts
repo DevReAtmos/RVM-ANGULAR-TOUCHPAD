@@ -34,7 +34,7 @@ export class PhoneComponent implements OnInit{
 
   nextPressed(){
     
-    if(this.phoneNumber.length == 8){
+    if(this.phoneNumber.length == 10){
       this.setPhoneNumberOnLocalStorage(this.phoneNumber);
       // this.submitData();
 
