@@ -34,6 +34,7 @@ export class DonateComponent implements OnInit {
       mcid: this.machineinfo.mcid,
       bottles: this.localdata.totalBottleCount,
       cans: this.localdata.totalCanCount,
+      polybag: this.localdata.totalPolybagCount,
       weight: this.localdata.totalWeightBottle + this.localdata.totalWeightCans,
       date: this.date.split('T')[0], // Assuming you want to send only the date part
       time: '', // Ensure time is filled as per your requirement

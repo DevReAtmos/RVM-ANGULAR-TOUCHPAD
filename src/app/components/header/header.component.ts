@@ -8,7 +8,7 @@ import { filter } from 'rxjs';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent {
-    logo1: string = 'assets/images/logo.png';
+    logo1: string = 'assets/images/Sandvik.png';
     logo2: string = 'assets/images/logo.png';
     hideImages: boolean = false;
 

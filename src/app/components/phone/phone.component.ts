@@ -89,7 +89,7 @@ export class PhoneComponent implements OnInit{
       phone: this.localdata.phoneNumber,
       bottle: this.localdata.totalBottleCount,
       can: this.localdata.totalCanCount,
-      bags: 0,
+      polybag: this.localdata.totalPolybagCount,
       dt: this.date.split('T')[0],
       time : '',
       city:  this.machineinfo.city,
