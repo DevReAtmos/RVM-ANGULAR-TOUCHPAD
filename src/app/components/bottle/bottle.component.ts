@@ -210,6 +210,16 @@ export class BottleComponent implements OnInit{
        console.log("data are",data);
        let inc = data.counter;
        console.log("counter value is",data.counter);
+       if(data.polybag){
+        console.log(data.bottleStatus);
+        console.log(data.weight);
+        this.isCrushing = true;
+        this.hideButtons = true;
+        this.totalPolybagCount = this.totalPolybagCount + 1;
+        this.counter = 60;
+        this.crush(this.dataID, false, false, true);
+      }
+
        if(inc){
         console.log("counter value is",inc);
             if(data.bottleStatus && (data.weight > 6 && data.weight < 70)){ 
@@ -286,15 +296,15 @@ export class BottleComponent implements OnInit{
       }
 
       //for polybag
-      if(data.polybag){
-        console.log(data.bottleStatus);
-        console.log(data.weight);
-        this.isCrushing = true;
-        this.hideButtons = true;
-        this.totalPolybagCount = this.totalPolybagCount + 1;
-        this.counter = 60;
-        this.crush(this.dataID, false, false, true);
-      }
+      // if(data.polybag){
+      //   console.log(data.bottleStatus);
+      //   console.log(data.weight);
+      //   this.isCrushing = true;
+      //   this.hideButtons = true;
+      //   this.totalPolybagCount = this.totalPolybagCount + 1;
+      //   this.counter = 60;
+      //   this.crush(this.dataID, false, false, true);
+      // }
 
      
       if(data.metal && data.weight > 40){

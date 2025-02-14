@@ -25,7 +25,7 @@ export class ThankComponent implements OnInit{
   ){
     this.localdata = this.machineDataService.getSavedData();
     this.machineinfo = this.machineDataService.getMachineInfoStoreLocally();
-    this.data = {
+    this.data = { 
       mcid: this.machineinfo.mcid,
       bottles: this.localdata.totalBottleCount,
       cans: this.localdata.totalCanCount,

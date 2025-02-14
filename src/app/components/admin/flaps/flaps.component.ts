@@ -35,7 +35,7 @@ export class FlapsComponent implements OnInit{
           this.toastr.error('Flap Bottle Trigger Failed', 'Error!');
         }
       );
-      }, 1000);
+      }, 500);
     }, (error)=>{
       this.toastr.error('Flap Bottle Trigger Failed', 'Error!');
     });
@@ -52,7 +52,7 @@ export class FlapsComponent implements OnInit{
           this.toastr.error('Flap Bottle Trigger Failed', 'Error!');
         }
       );
-      }, 1000);
+      }, 500);
     }, (error)=>{
       this.toastr.error('Flap Bottle Trigger Failed', 'Error!');
     });
@@ -69,7 +69,7 @@ export class FlapsComponent implements OnInit{
           this.toastr.error('Shutter up Trigger Failed', 'Error!');
         }
       );
-      }, 1000);
+      }, 50);
     }, (error)=>{
       this.toastr.error('Shutter up Trigger Failed', 'Error!');
     });
@@ -86,7 +86,7 @@ export class FlapsComponent implements OnInit{
           this.toastr.error('Shutter down Trigger Failed', 'Error!');
         }
       );
-      }, 1000);
+      }, 50);
     }, (error)=>{
       this.toastr.error('Shutter  down Trigger Failed', 'Error!');
     });
